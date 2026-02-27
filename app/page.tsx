@@ -124,50 +124,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DOCUMENTS + CONDITIONS */}
-      <section className="bg-yellow-50 py-20 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+{/* CONDITIONS AFTER STEPS */}
+<section className="bg-yellow-50 py-20 px-6">
+  <div className="max-w-5xl mx-auto">
 
-          {/* WHAT TO PROVIDE */}
-          <div className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-6">
-              Что нужно предоставить
-            </h2>
-            <ul className="space-y-3 text-gray-700">
-              <li>ВУ с двух сторон</li>
-              <li>Техпаспорт с двух сторон</li>
-              <li>Паспорт (стр. 31, 33 + прописка)</li>
-              <li>Номер телефона для Яндекс Про</li>
-              <li>IBAN карты (28 символов)</li>
-              <li>Курсы такси</li>
-              <li>Мед. справка</li>
-              <li>6 фото авто в оклейке</li>
-            </ul>
-          </div>
+    <div className="bg-white p-10 rounded-2xl shadow-xl">
 
-          {/* CONDITIONS */}
-          <div className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-6">
-              Условия сотрудничества
-            </h2>
+      <p className="text-xl font-semibold mb-6">
+        Официальный парк такси
+      </p>
 
-            <p className="font-semibold mb-4">
-              Официальный парк такси
-            </p>
+      <ul className="space-y-4 text-lg text-gray-800">
+        <li>✔ Комиссия парка 18% (уплачиваем все налоги)</li>
+        <li>✔ Еженедельный вывод на карту</li>
+        <li>✔ Официальное трудоустройство по трудовому договору</li>
+        <li>✔ Полный социальный пакет</li>
+        <li>✔ Пассажирская страховка за счёт парка</li>
+        <li>✔ Внесение в реестр за счёт парка</li>
+        <li>✔ Подключение программной кассы</li>
+      </ul>
 
-            <ul className="space-y-3 text-gray-700">
-              <li>Комиссия парка 18% (уплачиваем все налоги)</li>
-              <li>Еженедельный вывод на карту</li>
-              <li>Официальное трудоустройство</li>
-              <li>Полный соц. пакет</li>
-              <li>Пассажирская страховка за счёт парка</li>
-              <li>Внесение в реестр за счёт парка</li>
-              <li>Подключение программной кассы</li>
-            </ul>
-          </div>
+    </div>
 
-        </div>
-      </section>
+  </div>
+</section>
+
 
       {/* FORM */}
       <section id="form" className="py-20 px-6 bg-white">
