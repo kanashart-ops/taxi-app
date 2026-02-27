@@ -30,57 +30,57 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO */}
-      <section
-        className="pt-32 pb-36 bg-cover bg-center flex items-center justify-center text-center"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-      >
-        <div className="max-w-4xl">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
-  <span
-    className="text-black"
-    style={{
-      WebkitTextStroke: "1.5px #facc15",
-    }}
-  >
-    Работа водителем в Яндекс.Такси
-  </span>
-  <br />
-  <span
-    className="text-black"
-    style={{
-      WebkitTextStroke: "1.5px #facc15",
-    }}
-  >
-    на личном или арендном авто в Минске
-  </span>
-</h1>
+{/* HERO */}
+<section className="pt-32">
+  <div className="relative w-full h-[700px]">
 
-<p
-  className="text-xl md:text-2xl text-black mb-8"
-  style={{
-    WebkitTextStroke: "1px #facc15",
-  }}
->
-  Отличные условия сотрудничества — вы сами планируете своё время и доход.
-</p>
+    {/* КАРТИНКА */}
+    <img
+      src="/images/hero-bg.jpg"
+      alt="Работа в такси"
+      className="w-full h-full object-cover"
+    />
 
-
-
-          <a
-            href="#form"
-            className="bg-yellow-400 text-black font-bold py-4 px-10 rounded-lg hover:bg-yellow-300 transition text-lg"
-          >
-            Оставить заявку
-          </a>
+    {/* ВЕРХНИЙ ТЕКСТ — 2 СТРОКИ */}
+    <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center w-full px-6">
+      <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+        <div
+          className="text-black"
+          style={{ WebkitTextStroke: "1.5px #facc15" }}
+        >
+          Работа водителем в Яндекс.Такси
         </div>
-      </section>
+        <div
+          className="text-black"
+          style={{ WebkitTextStroke: "1.5px #facc15" }}
+        >
+          на личном или арендном авто в Минске
+        </div>
+      </h1>
+    </div>
+
+    {/* НИЖНИЙ ТЕКСТ — 1 СТРОКА */}
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center w-full px-6">
+      <p
+        className="text-xl md:text-2xl text-black"
+        style={{ WebkitTextStroke: "1px #facc15" }}
+      >
+        Отличные условия сотрудничества — вы сами планируете своё время и доход.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+
+
 
       {/* ABOUT */}
       <section id="about" className="py-24 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-bold mb-6">О компании</h2>
+            <h2 className="text-4xl font-bold mb-6"></h2>
             <p className="text-xl font-semibold leading-relaxed mb-4">
               ООО «Первая поездка» стремится создать комфортные условия трудоустройства,
               где каждый водитель может выйти на работу в удобное время и прогнозировать свой доход.
@@ -103,7 +103,7 @@ export default function Home() {
       {/* HOW */}
       <section id="how" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-12">Как начать работу</h2>
+          <h2 className="text-3xl font-bold mb-12">Условия сотрудничества</h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-xl shadow">
