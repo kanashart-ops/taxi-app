@@ -23,9 +23,7 @@ export const metadata: Metadata = {
       "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
     url: "https://твойдомен.by",
     siteName: "ООО «Первая поездка»",
-    images: [
-      "https://твойдомен.by/images/preview.jpg", // <- здесь строка, а не объект
-    ],
+    images: ["https://твойдомен.by/images/preview.jpg"], // только строка
   },
   twitter: {
     card: "summary_large_image",
@@ -39,15 +37,37 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const ogImages =
-    metadata.openGraph?.images?.map((img) =>
-      typeof img === "string" ? img : (img as any).url ?? ""
-    ) ?? [];
+  // безопасно преобразуем openGraph.images в массив строк
+  const ogImages: string[] = [];
+  if (metadata.openGraph?.images) {
+    if (Array.isArray(metadata.openGraph.images)) {
+      metadata.openGraph.images.forEach((img) => {
+        ogImages.push(typeof img === "string" ? img : (img as any).url ?? "");
+      });
+    } else {
+      ogImages.push(
+        typeof metadata.openGraph.images === "string"
+          ? metadata.openGraph.images
+          : (metadata.openGraph.images as any).url ?? ""
+      );
+    }
+  }
 
-  const twitterImages =
-    metadata.twitter?.images?.map((img) =>
-      typeof img === "string" ? img : (img as any).url ?? ""
-    ) ?? [];
+  // безопасно преобразуем twitter.images в массив строк
+  const twitterImages: string[] = [];
+  if (metadata.twitter?.images) {
+    if (Array.isArray(metadata.twitter.images)) {
+      metadata.twitter.images.forEach((img) => {
+        twitterImages.push(typeof img === "string" ? img : (img as any).url ?? "");
+      });
+    } else {
+      twitterImages.push(
+        typeof metadata.twitter.images === "string"
+          ? metadata.twitter.images
+          : (metadata.twitter.images as any).url ?? ""
+      );
+    }
+  }
 
   return (
     <html lang="ru">
@@ -80,30 +100,27 @@ export default function RootLayout({
         </noscript>
 
         {/* Open Graph */}
-        <meta property="og:title" content={String(metadata.openGraph?.title ?? "")} />
+        <meta property="og:title" content={metadata.openGraph?.title ?? ""} />
         <meta
           property="og:description"
-          content={String(metadata.openGraph?.description ?? "")}
+          content={metadata.openGraph?.description ?? ""}
         />
-        <meta property="og:url" content={String(metadata.openGraph?.url ?? "")} />
-        <meta
-          property="og:site_name"
-          content={String(metadata.openGraph?.siteName ?? "")}
-        />
+        <meta property="og:url" content={metadata.openGraph?.url ?? ""} />
+        <meta property="og:site_name" content={metadata.openGraph?.siteName ?? ""} />
         <meta property="og:type" content="website" />
         {ogImages.map((img, idx) => (
-          <meta key={idx} property="og:image" content={String(img)} />
+          <meta key={idx} property="og:image" content={img} />
         ))}
 
         {/* Twitter */}
-        <meta name="twitter:card" content={String(metadata.twitter?.card ?? "")} />
-        <meta name="twitter:title" content={String(metadata.twitter?.title ?? "")} />
+        <meta name="twitter:card" content={metadata.twitter?.card ?? ""} />
+        <meta name="twitter:title" content={metadata.twitter?.title ?? ""} />
         <meta
           name="twitter:description"
-          content={String(metadata.twitter?.description ?? "")}
+          content={metadata.twitter?.description ?? ""}
         />
         {twitterImages.map((img, idx) => (
-          <meta key={idx} name="twitter:image" content={String(img)} />
+          <meta key={idx} name="twitter:image" content={img} />
         ))}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
