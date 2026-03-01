@@ -23,14 +23,19 @@ export const metadata: Metadata = {
       "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
     url: "https://твойдомен.by",
     siteName: "ООО «Первая поездка»",
-    images: ["https://твойдомен.by/images/preview.jpg"],
+    images: [
+      "https://твойдомен.by/images/preview.jpg" // просто строки, чтобы TS не ругался
+    ],
+    type: "website",
   },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const ogImages = metadata.openGraph?.images ?? [];
+  const ogImages = Array.isArray(metadata.openGraph?.images)
+    ? metadata.openGraph.images
+    : [];
 
   return (
     <html lang="ru">
@@ -63,24 +68,25 @@ export default function RootLayout({
         </noscript>
 
         {/* Open Graph */}
-        <meta property="og:title" content={String(metadata.openGraph?.title ?? "")} />
-        <meta property="og:description" content={String(metadata.openGraph?.description ?? "")} />
-        <meta property="og:url" content={String(metadata.openGraph?.url ?? "")} />
-        <meta property="og:site_name" content={String(metadata.openGraph?.siteName ?? "")} />
+        <meta
+          property="og:title"
+          content={String(metadata.openGraph?.title ?? "")}
+        />
+        <meta
+          property="og:description"
+          content={String(metadata.openGraph?.description ?? "")}
+        />
+        <meta
+          property="og:url"
+          content={String(metadata.openGraph?.url ?? "")}
+        />
+        <meta
+          property="og:site_name"
+          content={String(metadata.openGraph?.siteName ?? "")}
+        />
         <meta property="og:type" content="website" />
         {ogImages.map((img, idx) => (
-          <meta key={idx} property="og:image" content={img} />
-        ))}
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={String(metadata.title ?? "")} />
-        <meta
-          name="twitter:description"
-          content={String(metadata.description ?? "")}
-        />
-        {ogImages.map((img, idx) => (
-          <meta key={idx} name="twitter:image" content={img} />
+          <meta key={idx} property="og:image" content={String(img ?? "")} />
         ))}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
