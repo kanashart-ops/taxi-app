@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script"; // <-- импортируем Script
+import Script from "next/script"; // Для вставки Яндекс.Метрики
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,10 +15,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Работа в Такси – ООО «Первая поездка»",
-  description: "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
+  description:
+    "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
   openGraph: {
     title: "Работа в Такси – ООО «Первая поездка»",
-    description: "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
+    description:
+      "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
     url: "https://твойдомен.by",
     siteName: "ООО «Первая поездка»",
     images: [
@@ -33,7 +35,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Работа в Такси – ООО «Первая поездка»",
-    description: "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
+    description:
+      "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
     images: ["https://твойдомен.by/images/preview.jpg"],
   },
 };
@@ -41,6 +44,19 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // Приводим openGraph.images и twitter.images к массиву
+  const ogImages = Array.isArray(metadata.openGraph?.images)
+    ? metadata.openGraph.images
+    : metadata.openGraph?.images
+    ? [metadata.openGraph.images]
+    : [];
+
+  const twitterImages = Array.isArray(metadata.twitter?.images)
+    ? metadata.twitter.images
+    : metadata.twitter?.images
+    ? [metadata.twitter.images]
+    : [];
+
   return (
     <html lang="ru">
       <head>
@@ -71,23 +87,49 @@ export default function RootLayout({
           </div>
         </noscript>
 
-{/* Open Graph */}
-<meta property="og:title" content={String(metadata.openGraph?.title ?? "")} />
-<meta property="og:description" content={String(metadata.openGraph?.description ?? "")} />
-<meta property="og:url" content={String(metadata.openGraph?.url ?? "")} />
-<meta property="og:site_name" content={String(metadata.openGraph?.siteName ?? "")} />
-{metadata.openGraph?.images?.map((img, idx) => (
-  <meta key={idx} property="og:image" content={String(img.url ?? "")} />
-))}
+        {/* Open Graph */}
+        <meta
+          property="og:title"
+          content={String(metadata.openGraph?.title ?? "")}
+        />
+        <meta
+          property="og:description"
+          content={String(metadata.openGraph?.description ?? "")}
+        />
+        <meta
+          property="og:url"
+          content={String(metadata.openGraph?.url ?? "")}
+        />
+        <meta
+          property="og:site_name"
+          content={String(metadata.openGraph?.siteName ?? "")}
+        />
+        <meta
+          property="og:type"
+          content={String(metadata.openGraph?.type ?? "website")}
+        />
+        {ogImages.map((img, idx) => (
+          <meta
+            key={idx}
+            property="og:image"
+            content={typeof img === "string" ? img : img.url ?? ""}
+          />
+        ))}
 
-{/* Twitter */}
-<meta name="twitter:card" content={String(metadata.twitter?.card ?? "")} />
-<meta name="twitter:title" content={String(metadata.twitter?.title ?? "")} />
-<meta name="twitter:description" content={String(metadata.twitter?.description ?? "")} />
-{metadata.twitter?.images?.map((img, idx) => (
-  <meta key={idx} name="twitter:image" content={String(img ?? "")} />
-))}
-
+        {/* Twitter */}
+        <meta name="twitter:card" content={String(metadata.twitter?.card ?? "")} />
+        <meta name="twitter:title" content={String(metadata.twitter?.title ?? "")} />
+        <meta
+          name="twitter:description"
+          content={String(metadata.twitter?.description ?? "")}
+        />
+        {twitterImages.map((img, idx) => (
+          <meta
+            key={idx}
+            name="twitter:image"
+            content={typeof img === "string" ? img : img.url ?? ""}
+          />
+        ))}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
