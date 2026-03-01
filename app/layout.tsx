@@ -23,13 +23,6 @@ export const metadata: Metadata = {
       "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
     url: "https://твойдомен.by",
     siteName: "ООО «Первая поездка»",
-    images: ["https://твойдомен.by/images/preview.jpg"], // строка
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Работа в Такси – ООО «Первая поездка»",
-    description:
-      "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
     images: ["https://твойдомен.by/images/preview.jpg"],
   },
 };
@@ -37,29 +30,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Преобразуем OpenGraph images в массив строк
-  const ogImages: string[] = [];
-  if (metadata.openGraph?.images) {
-    if (Array.isArray(metadata.openGraph.images)) {
-      metadata.openGraph.images.forEach((img) => {
-        ogImages.push(typeof img === "string" ? img : String((img as any).url ?? ""));
-      });
-    } else {
-      ogImages.push(String(metadata.openGraph.images ?? ""));
-    }
-  }
-
-  // Преобразуем Twitter images в массив строк
-  const twitterImages: string[] = [];
-  if (metadata.twitter?.images) {
-    if (Array.isArray(metadata.twitter.images)) {
-      metadata.twitter.images.forEach((img) => {
-        twitterImages.push(typeof img === "string" ? img : String((img as any).url ?? ""));
-      });
-    } else {
-      twitterImages.push(String(metadata.twitter.images ?? ""));
-    }
-  }
+  const ogImages = metadata.openGraph?.images ?? [];
 
   return (
     <html lang="ru">
@@ -102,10 +73,13 @@ export default function RootLayout({
         ))}
 
         {/* Twitter */}
-        <meta name="twitter:card" content={String(metadata.twitter?.card ?? "")} />
-        <meta name="twitter:title" content={String(metadata.twitter?.title ?? "")} />
-        <meta name="twitter:description" content={String(metadata.twitter?.description ?? "")} />
-        {twitterImages.map((img, idx) => (
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={String(metadata.title ?? "")} />
+        <meta
+          name="twitter:description"
+          content={String(metadata.description ?? "")}
+        />
+        {ogImages.map((img, idx) => (
           <meta key={idx} name="twitter:image" content={img} />
         ))}
       </head>
