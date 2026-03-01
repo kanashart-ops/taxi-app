@@ -71,22 +71,23 @@ export default function RootLayout({
           </div>
         </noscript>
 
-{/* Open Graph & Twitter */}
+{/* Open Graph */}
 <meta property="og:title" content={String(metadata.openGraph?.title ?? "")} />
 <meta property="og:description" content={String(metadata.openGraph?.description ?? "")} />
 <meta property="og:url" content={String(metadata.openGraph?.url ?? "")} />
 <meta property="og:site_name" content={String(metadata.openGraph?.siteName ?? "")} />
-<meta property="og:type" content={String(metadata.openGraph?.type ?? "")} />
 {metadata.openGraph?.images?.map((img, idx) => (
   <meta key={idx} property="og:image" content={String(img.url ?? "")} />
 ))}
 
+{/* Twitter */}
 <meta name="twitter:card" content={String(metadata.twitter?.card ?? "")} />
 <meta name="twitter:title" content={String(metadata.twitter?.title ?? "")} />
 <meta name="twitter:description" content={String(metadata.twitter?.description ?? "")} />
 {metadata.twitter?.images?.map((img, idx) => (
   <meta key={idx} name="twitter:image" content={String(img ?? "")} />
 ))}
+
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
