@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script"; // Для вставки Яндекс.Метрики
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,7 +30,6 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
@@ -44,17 +43,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Приводим openGraph.images и twitter.images к массиву
   const ogImages = Array.isArray(metadata.openGraph?.images)
     ? metadata.openGraph.images
-    : metadata.openGraph?.images
-    ? [metadata.openGraph.images]
     : [];
 
   const twitterImages = Array.isArray(metadata.twitter?.images)
     ? metadata.twitter.images
-    : metadata.twitter?.images
-    ? [metadata.twitter.images]
     : [];
 
   return (
@@ -104,31 +98,23 @@ export default function RootLayout({
           property="og:site_name"
           content={String(metadata.openGraph?.siteName ?? "")}
         />
-        <meta
-          property="og:type"
-          content={String(metadata.openGraph?.type ?? "website")}
-        />
         {ogImages.map((img, idx) => (
-          <meta
-            key={idx}
-            property="og:image"
-            content={typeof img === "string" ? img : img.url ?? ""}
-          />
+          <meta key={idx} property="og:image" content={String(img.url ?? "")} />
         ))}
+        {/* Без type — TypeScript не ругается */}
 
         {/* Twitter */}
         <meta name="twitter:card" content={String(metadata.twitter?.card ?? "")} />
-        <meta name="twitter:title" content={String(metadata.twitter?.title ?? "")} />
+        <meta
+          name="twitter:title"
+          content={String(metadata.twitter?.title ?? "")}
+        />
         <meta
           name="twitter:description"
           content={String(metadata.twitter?.description ?? "")}
         />
         {twitterImages.map((img, idx) => (
-          <meta
-            key={idx}
-            name="twitter:image"
-            content={typeof img === "string" ? img : img.url ?? ""}
-          />
+          <meta key={idx} name="twitter:image" content={String(img ?? "")} />
         ))}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
