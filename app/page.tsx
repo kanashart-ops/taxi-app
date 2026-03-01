@@ -9,10 +9,30 @@ export default function Home() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Заявка отправлена!");
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("/api/telegram", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Заявка отправлена!");
+      setForm({ name: "", phone: "" }); // очищаем форму после отправки
+    } else {
+      alert("Ошибка при отправке: " + data.error);
+    }
+  } catch (err) {
+    alert("Ошибка сервера, попробуйте позже.");
+    console.error(err);
+  }
+};
+
 
   return (
     <main className="bg-white text-gray-800">
