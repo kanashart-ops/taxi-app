@@ -1,46 +1,40 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const metadataBase = process.env.NEXT_PUBLIC_SITE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
+  : new URL("http://localhost:3000");
 
 export const metadata: Metadata = {
-  title: "Работа в Такси – ООО «Первая поездка»",
+  metadataBase,
+  title: "Работа в Яндекс Такси в Минске | ООО «Первая поездка»",
   description:
-    "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
+    "Официальный парк Яндекс Такси в Минске. Работа водителем на личном или арендном автомобиле с прозрачными условиями и поддержкой.",
   openGraph: {
-    title: "Работа в Такси – ООО «Первая поездка»",
+    title: "Работа в Яндекс Такси в Минске | ООО «Первая поездка»",
     description:
-      "Официальный парк Яндекс.Такси. Работа водителем на личном или арендном авто в Минске.",
-    url: "https://твойдомен.by",
+      "Официальный парк Яндекс Такси в Минске. Работа водителем на личном или арендном автомобиле с прозрачными условиями и поддержкой.",
     siteName: "ООО «Первая поездка»",
-    images: [
-      "https://твойдомен.by/images/preview.jpg" // просто строки, чтобы TS не ругался
-    ],
+    images: ["/images/hero-bg.jpg"],
     type: "website",
+    locale: "ru_BY",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Работа в Яндекс Такси в Минске | ООО «Первая поездка»",
+    description:
+      "Официальный парк Яндекс Такси в Минске. Работа водителем на личном или арендном автомобиле с прозрачными условиями и поддержкой.",
+    images: ["/images/hero-bg.jpg"],
   },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const ogImages = Array.isArray(metadata.openGraph?.images)
-    ? metadata.openGraph.images
-    : [];
-
   return (
     <html lang="ru">
       <head>
-        {/* Яндекс.Метрика */}
         <Script
           id="yandex-metrika"
           strategy="afterInteractive"
@@ -53,12 +47,25 @@ export default function RootLayout({
                 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
               })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=107046347', 'ym');
 
-              ym(107046347, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+              ym(107046347, 'init', {
+                ssr: true,
+                webvisor: true,
+                clickmap: true,
+                ecommerce: "dataLayer",
+                referrer: document.referrer,
+                url: location.href,
+                accurateTrackBounce: true,
+                trackLinks: true
+              });
             `,
           }}
         />
+      </head>
+      <body className="antialiased">
+        {children}
         <noscript>
           <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://mc.yandex.ru/watch/107046347"
               style={{ position: "absolute", left: "-9999px" }}
@@ -66,31 +73,6 @@ export default function RootLayout({
             />
           </div>
         </noscript>
-
-        {/* Open Graph */}
-        <meta
-          property="og:title"
-          content={String(metadata.openGraph?.title ?? "")}
-        />
-        <meta
-          property="og:description"
-          content={String(metadata.openGraph?.description ?? "")}
-        />
-        <meta
-          property="og:url"
-          content={String(metadata.openGraph?.url ?? "")}
-        />
-        <meta
-          property="og:site_name"
-          content={String(metadata.openGraph?.siteName ?? "")}
-        />
-        <meta property="og:type" content="website" />
-        {ogImages.map((img, idx) => (
-          <meta key={idx} property="og:image" content={String(img ?? "")} />
-        ))}
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
       </body>
     </html>
   );
