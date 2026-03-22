@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"; // ✅ добавил импорт
 import "./globals.css";
 
 const metadataBase = process.env.NEXT_PUBLIC_SITE_URL
@@ -63,6 +64,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+
+        {/* ✅ ВСТАВИЛ ВОТ СЮДА */}
+        <Analytics />
+
         <noscript>
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
