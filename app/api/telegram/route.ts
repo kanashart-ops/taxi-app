@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 type ApplicationPayload = {
   name?: unknown;
   phone?: unknown;
   website?: unknown;
+};
+
+type TelegramResponse = {
+  ok?: boolean;
+  description?: string;
+  error_code?: number;
 };
 
 function normalizeText(value: unknown): string {
@@ -29,6 +37,36 @@ function normalizeEnvValue(value: string | undefined): string {
 
 function isPhoneValid(phone: string): boolean {
   return /^[+\d\s()-]{7,20}$/.test(phone);
+}
+
+function getTelegramErrorMessage(response: TelegramResponse): string {
+  const description = response.description?.toLowerCase() ?? "";
+
+  if (description.includes("chat not found") || description.includes("user not found")) {
+    return "Telegram не нашел чат. Проверьте TELEGRAM_CHAT_ID: для группы и канала он обычно начинается с -100.";
+  }
+
+  if (description.includes("bot was blocked by the user")) {
+    return "Бот заблокирован получателем. Откройте диалог с ботом в Telegram и нажмите Start.";
+  }
+
+  if (description.includes("bot is not a member of the channel chat")) {
+    return "Бот не добавлен в канал или группу. Добавьте его в чат и выдайте права на отправку сообщений.";
+  }
+
+  if (description.includes("have no rights to send a message")) {
+    return "У бота нет прав на отправку сообщений в этот чат. Проверьте права администратора и разрешения канала/группы.";
+  }
+
+  if (description.includes("group chat was upgraded to a supergroup chat")) {
+    return "У группы изменился chat ID после преобразования в supergroup. Нужно сохранить новый TELEGRAM_CHAT_ID.";
+  }
+
+  if (description.includes("unauthorized")) {
+    return "TELEGRAM_BOT_TOKEN отклонен Telegram. Проверьте, что токен скопирован полностью и без лишних символов.";
+  }
+
+  return "Не удалось отправить заявку. Попробуйте еще раз.";
 }
 
 export async function POST(req: Request) {
@@ -57,36 +95,21 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { success: false, error: "Сервер временно не настроен для приема заявок." },
+      { success: false, error: "Сервер не настроен для отправки заявок." },
       { status: 500 }
     );
   }
 
-  if (!token.includes(":")) {
-    console.error("TELEGRAM_BOT_TOKEN looks invalid", {
-      tokenPreview: `${token.slice(0, 5)}...`,
-    });
-
+  if (!name) {
     return NextResponse.json(
-      { success: false, error: "Сервер временно не настроен для приема заявок." },
-      { status: 500 }
-    );
-  }
-
-  if (website) {
-    return NextResponse.json({ success: true });
-  }
-
-  if (name.length < 2 || name.length > 80) {
-    return NextResponse.json(
-      { success: false, error: "Укажите имя длиной от 2 до 80 символов." },
+      { success: false, error: "Введите имя." },
       { status: 400 }
     );
   }
 
-  if (!isPhoneValid(phone)) {
+  if (!phone || !isPhoneValid(phone)) {
     return NextResponse.json(
-      { success: false, error: "Укажите корректный номер телефона." },
+      { success: false, error: "Введите корректный номер телефона." },
       { status: 400 }
     );
   }
@@ -95,6 +118,7 @@ export async function POST(req: Request) {
     "🚕 Новая заявка с сайта",
     `Имя: ${name}`,
     `Телефон: ${phone}`,
+    `Сайт: ${website || "не указан"}`,
     `Дата: ${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Minsk" })}`,
   ].join("\n");
 
@@ -112,22 +136,21 @@ export async function POST(req: Request) {
       cache: "no-store",
     });
 
-    const telegramResponse = (await res.json()) as {
-      ok?: boolean;
-      description?: string;
-      error_code?: number;
-    };
+    const telegramResponse = (await res.json()) as TelegramResponse;
 
     if (!res.ok || !telegramResponse.ok) {
+      const errorMessage = getTelegramErrorMessage(telegramResponse);
+
       console.error("Telegram sendMessage failed", {
         status: res.status,
         statusText: res.statusText,
         description: telegramResponse.description,
         errorCode: telegramResponse.error_code,
+        chatIdPreview: chatId.slice(0, 6),
       });
 
       return NextResponse.json(
-        { success: false, error: "Не удалось отправить заявку. Попробуйте еще раз." },
+        { success: false, error: errorMessage },
         { status: 502 }
       );
     }
