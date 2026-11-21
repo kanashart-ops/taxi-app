@@ -5,7 +5,7 @@ export default function TaxiServiceLogos() {
       aria-label="Службы такси: WB Taxi, A1 Такси, Яндекс Go"
     >
       <div className="grid w-full max-w-[700px] grid-cols-3 gap-2 sm:gap-4">
-        <div className="flex min-h-16 items-center justify-center rounded-2xl border border-white/60 bg-white/95 px-2 py-3 shadow-[0_8px_24px_rgba(12,17,29,0.15)] sm:min-h-20 sm:px-4">
+        <div className="flex min-h-16 items-center justify-center px-2 py-3 sm:min-h-20 sm:px-4">
           <svg viewBox="0 0 225 70" className="h-auto w-full max-w-[208px]" role="img" aria-label="WB Taxi" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="wb-logo-gradient" x1="0" y1="0" x2="1" y2="1">
@@ -20,7 +20,7 @@ export default function TaxiServiceLogos() {
             <text x="77" y="43" fontFamily="Arial, sans-serif" fontSize="25" fill="#37205f" letterSpacing=".3">WB TAXI</text>
           </svg>
         </div>
-        <div className="flex min-h-16 items-center justify-center rounded-2xl border border-white/60 bg-white/95 px-2 py-2 shadow-[0_8px_24px_rgba(12,17,29,0.15)] sm:min-h-20 sm:px-4">
+        <div className="flex min-h-16 items-center justify-center px-2 py-2 sm:min-h-20 sm:px-4">
           <svg viewBox="0 0 235 92" className="h-auto w-full max-w-[208px]" role="img" aria-label="A1 Такси" xmlns="http://www.w3.org/2000/svg">
             <path d="M74 25a45 45 0 0 1 90 0" fill="none" stroke="#ed231c" strokeWidth="10" />
             <path d="M93 29a26 26 0 0 1 52 0" fill="none" stroke="#ed231c" strokeWidth="10" />
@@ -28,7 +28,7 @@ export default function TaxiServiceLogos() {
             <path d="M90 70l29 20 29-20" fill="none" stroke="#ed231c" strokeWidth="9" strokeLinejoin="miter" />
           </svg>
         </div>
-        <div className="flex min-h-16 items-center justify-center rounded-2xl border border-white/60 bg-white/95 px-2 py-3 shadow-[0_8px_24px_rgba(12,17,29,0.15)] sm:min-h-20 sm:px-4">
+        <div className="flex min-h-16 items-center justify-center px-2 py-3 sm:min-h-20 sm:px-4">
           <svg viewBox="0 0 218 70" className="h-auto w-full max-w-[208px]" role="img" aria-label="Яндекс Go" xmlns="http://www.w3.org/2000/svg">
             <text x="5" y="43" fontFamily="Arial, sans-serif" fontSize="29" fontWeight="700" fill="#111111">Яндекс</text>
             <rect x="137" y="4" width="65" height="62" rx="19" fill="#ffdd00" />
