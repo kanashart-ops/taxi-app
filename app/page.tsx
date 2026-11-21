@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ApplicationForm from "@/components/ApplicationForm";
 import Navbar from "@/components/Navbar";
+import TaxiServiceLogos from "@/components/TaxiServiceLogos";
 
 const benefits = [
   "Комиссия парка 18% с уплатой налогов.",
@@ -53,11 +54,13 @@ export default function Home() {
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,17,29,0.18),rgba(12,17,29,0.74))]" />
         </div>
 
+        <TaxiServiceLogos />
+
         <div className="relative mx-auto flex min-h-[680px] max-w-7xl items-end px-6 pb-16 pt-14">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-end">
             <div className="max-w-3xl text-white">
               <p className="mb-4 inline-flex rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] backdrop-blur-sm">
-                Работа в Яндекс Такси
+                РАБОТА В ТАКСИ
               </p>
               <h1 className="max-w-2xl text-4xl font-black leading-tight text-balance sm:text-5xl lg:text-6xl">
                 Работа водителем на личном или арендном авто в Минске
