@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function TaxiServiceLogos() {
   return (
     <div
@@ -8,7 +6,19 @@ export default function TaxiServiceLogos() {
     >
       <div className="grid min-h-16 w-full max-w-[750px] grid-cols-3 items-center gap-1.5 sm:min-h-20 sm:gap-5">
         <div className="flex min-w-0 items-center justify-center">
-          <Image src="/images/wb-taxi-logo.png" alt="WB Taxi" width={253} height={95} className="block h-auto w-full max-w-[225px] object-contain" priority />
+          <svg viewBox="0 0 225 70" className="block aspect-[253/95] w-full max-w-[225px]" role="img" aria-label="WB Taxi" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="wb-logo-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#b17bff" />
+                <stop offset="100%" stopColor="#6835e8" />
+              </linearGradient>
+            </defs>
+            <rect x="4" y="5" width="60" height="60" rx="16" fill="url(#wb-logo-gradient)" />
+            <circle cx="34" cy="32" r="16" fill="#eee1ff" />
+            <circle cx="34" cy="32" r="8" fill="#9661ef" />
+            <path d="M34 47v6" stroke="#eee1ff" strokeWidth="5" strokeLinecap="round" />
+            <text x="77" y="43" fontFamily="Arial, sans-serif" fontSize="25" fill="#37205f" letterSpacing=".3">WB TAXI</text>
+          </svg>
         </div>
         <div className="flex min-w-0 items-center justify-center">
           <svg viewBox="0 0 235 92" className="h-auto w-full max-w-[225px]" role="img" aria-label="A1 Такси" xmlns="http://www.w3.org/2000/svg">
